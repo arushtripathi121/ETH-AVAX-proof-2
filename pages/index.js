@@ -111,7 +111,7 @@ export default function HomePage() {
     return (
       <div>
         <p>Your Account: {account}</p>
-        <p>Your Balance: {balance}</p>
+        <p>Your Balance: {balance} ETH</p>
         <button onClick={deposit}>Deposit 1 ETH</button>
         <button onClick={withdraw}>Withdraw 1 ETH</button>
         {isOwner && (
@@ -132,7 +132,49 @@ export default function HomePage() {
       {initUser()}
       <style jsx>{`
         .container {
-          text-align: center
+          text-align: center;
+          margin: 0 auto;
+          padding: 20px;
+          max-width: 600px;
+          font-family: Arial, sans-serif;
+          background: linear-gradient(135deg, #72EDF2 10%, #5151E5 100%);
+          border-radius: 10px;
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+          color: #fff;
+        }
+        header {
+          margin-bottom: 20px;
+        }
+        h1 {
+          font-size: 26px;
+          color: #fff;
+          text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        p {
+          font-size: 18px;
+          color: #f0f0f0;
+          text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        button {
+          background-color: #ff9800;
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          font-size: 16px;
+          cursor: pointer;
+          border-radius: 5px;
+          margin: 5px;
+          transition: background-color 0.3s ease;
+        }
+        button:hover {
+          background-color: #e68a00;
+        }
+        button:disabled {
+          background-color: #cccccc;
+          cursor: not-allowed;
+        }
+        div {
+          margin-top: 20px;
         }
       `}
       </style>
