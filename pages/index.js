@@ -9,7 +9,7 @@ export default function HomePage() {
   const [balance, setBalance] = useState(undefined);
   const [isOwner, setIsOwner] = useState(false);
 
-  const contractAddress = "0x5fbdb2315678afecb367f032d93f642f64180aa3";
+  const contractAddress = "0x5fbdb2315678afecb367f032d93f642f64180aa3";  // Replace with your actual contract address
   const atmABI = atm_abi.abi;
 
   const getWallet = async () => {
@@ -18,16 +18,16 @@ export default function HomePage() {
     }
 
     if (ethWallet) {
-      const account = await ethWallet.request({ method: "eth_accounts" });
-      handleAccount(account);
+      const accounts = await ethWallet.request({ method: "eth_accounts" });
+      handleAccount(accounts);
     }
   }
 
-  const handleAccount = (account) => {
-    if (account.length > 0) {
-      console.log("Account connected: ", account);
-      setAccount(account[0]);
-      getATMContract(account[0]);
+  const handleAccount = (accounts) => {
+    if (accounts.length > 0) {
+      console.log("Account connected: ", accounts);
+      setAccount(accounts[0]);
+      getATMContract(accounts[0]);
     } else {
       console.log("No account found");
     }
@@ -60,7 +60,8 @@ export default function HomePage() {
 
   const getBalance = async () => {
     if (atm) {
-      setBalance((await atm.getBalance()).toNumber());
+      const balance = await atm.getBalance();
+      setBalance(balance.toNumber());  // Ensure balance is updated
     }
   }
 
@@ -68,7 +69,7 @@ export default function HomePage() {
     if (atm) {
       let tx = await atm.deposit(1);
       await tx.wait();
-      getBalance();
+      await getBalance();  // Ensure balance is updated
     }
   }
 
@@ -76,7 +77,7 @@ export default function HomePage() {
     if (atm) {
       let tx = await atm.withdraw(1);
       await tx.wait();
-      getBalance();
+      await getBalance();  // Ensure balance is updated
     }
   }
 
@@ -84,7 +85,7 @@ export default function HomePage() {
     if (atm) {
       let tx = await atm.sendMoney(recipientAddress, ethers.utils.parseEther(amount));
       await tx.wait();
-      getBalance();
+      await getBalance();  // Ensure balance is updated
     }
   }
 
@@ -92,6 +93,7 @@ export default function HomePage() {
     if (atm) {
       let tx = await atm.close();
       await tx.wait();
+      // Optionally, clear the state or redirect user
     }
   }
 
@@ -124,7 +126,20 @@ export default function HomePage() {
     )
   }
 
-  useEffect(() => { getWallet(); }, []);
+  useEffect(() => {
+    getWallet();
+  }, []);
+
+  useEffect(() => {
+    if (account && atm) {
+      getBalance();
+      const fetchOwnerStatus = async () => {
+        const owner = await atm.isOwner(account);
+        setIsOwner(owner);
+      };
+      fetchOwnerStatus();
+    }
+  }, [account, atm]);
 
   return (
     <main className="container">
