@@ -21,8 +21,8 @@ This project demonstrates a simple ATM functionality using Solidity smart contra
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/metacrafters-atm.git
-   cd metacrafters-atm
+   git clone https://github.com/arushtripathi121/ETH-AVAX-proof-2.git
+   cd ETH-AVAX-proof-2
    ```
 
 2. **Install dependencies**:
