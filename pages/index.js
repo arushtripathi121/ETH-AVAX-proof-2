@@ -9,7 +9,7 @@ export default function HomePage() {
   const [balance, setBalance] = useState(undefined);
   const [isOwner, setIsOwner] = useState(false);
 
-  const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+  const contractAddress = "0x5fbdb2315678afecb367f032d93f642f64180aa3";
   const atmABI = atm_abi.abi;
 
   const getWallet = async () => {
