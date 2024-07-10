@@ -9,7 +9,7 @@ export default function HomePage() {
   const [balance, setBalance] = useState(undefined);
   const [isOwner, setIsOwner] = useState(false);
 
-  const contractAddress = "0x5fbdb2315678afecb367f032d93f642f64180aa3";  // Replace with your actual contract address
+  const contractAddress = "0x5fbdb2315678afecb367f032d93f642f64180aa3";
   const atmABI = atm_abi.abi;
 
   const getWallet = async () => {
@@ -49,11 +49,9 @@ export default function HomePage() {
     const atmContract = new ethers.Contract(contractAddress, atmABI, signer);
     setATM(atmContract);
 
-    // Check if the connected account is the owner
     const owner = await atmContract.isOwner(account);
     setIsOwner(owner);
 
-    // Get balance
     const balance = await atmContract.getBalance();
     setBalance(balance.toNumber());
   }
@@ -61,7 +59,7 @@ export default function HomePage() {
   const getBalance = async () => {
     if (atm) {
       const balance = await atm.getBalance();
-      setBalance(balance.toNumber());  // Ensure balance is updated
+      setBalance(balance.toNumber());
     }
   }
 
@@ -69,7 +67,7 @@ export default function HomePage() {
     if (atm) {
       let tx = await atm.deposit(1);
       await tx.wait();
-      await getBalance();  // Ensure balance is updated
+      await getBalance();
     }
   }
 
@@ -77,7 +75,7 @@ export default function HomePage() {
     if (atm) {
       let tx = await atm.withdraw(1);
       await tx.wait();
-      await getBalance();  // Ensure balance is updated
+      await getBalance(); 
     }
   }
 
@@ -85,7 +83,7 @@ export default function HomePage() {
     if (atm) {
       let tx = await atm.sendMoney(recipientAddress, ethers.utils.parseEther(amount));
       await tx.wait();
-      await getBalance();  // Ensure balance is updated
+      await getBalance();
     }
   }
 
@@ -93,7 +91,7 @@ export default function HomePage() {
     if (atm) {
       let tx = await atm.close();
       await tx.wait();
-      // Optionally, clear the state or redirect user
+      
     }
   }
 
